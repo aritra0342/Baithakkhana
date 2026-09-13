@@ -1,0 +1,11 @@
+flowchart LR
+  C[Customer checkout] --> V[Validate order and reprice]
+  V --> W[Save order in one transaction]
+  W --> DB[(Neon Postgres)]
+  W --> R[Customer receipt]
+  L[Worker sign in] --> A[Password and session check]
+  A --> DB
+  DB --> Q[Live staff order queue]
+  Q --> U[Claim and change status]
+  U --> DB
+  U --> S[Received to Preparing to Ready to Completed]

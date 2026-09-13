@@ -1,0 +1,44 @@
+{
+  "name": "boithokkhana",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": { "node": ">=22.12.0 <27" },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && tsc -p tsconfig.server.json && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "server:dev": "tsx watch server/src/index.ts",
+    "server:start": "tsx server/src/index.ts",
+    "db:migrate": "tsx server/scripts/migrate.ts",
+    "worker:create": "tsx server/scripts/create-worker.ts"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "framer-motion": "latest",
+    "lucide-react": "latest",
+    "pg": "^8.23.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "^7.18.3",
+    "zod": "^4.6.4",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.5.1",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.23.13",
+    "typescript": "latest",
+    "vite": "latest",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,1 @@
+export default { content: ['./index.html','./src/**/*.{ts,tsx}'], theme: { extend: { fontFamily: { bengali: ['"Noto Serif Bengali"','serif'], sans: ['"Noto Sans Bengali"','sans-serif'] } } }, plugins: [] }
