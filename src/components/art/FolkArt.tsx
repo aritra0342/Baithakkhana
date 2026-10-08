@@ -55,7 +55,31 @@ export function FolkArt({ kind = 'lotus', className = '' }: { kind?: Motif; clas
   );
 }
 
+/**
+ * কাঁথা — the running stitch of Bengal's quilts. Three stitched rows: two straight
+ * runs that travel in opposite directions and a wave between them. The wave is
+ * generated so it can be long enough to cover any container width.
+ */
+const wave = (() => {
+  let d = 'M0 12';
+  for (let x = 0; x < 3600; x += 28) d += `Q${x + 7} 3 ${x + 14} 12T${x + 28} 12`;
+  return d;
+})();
+
 export function FolkBorder({ className = '' }: { className?: string }) {
   const id = useId().replace(/:/g, '');
-  return <div className={`folk-border ${className}`} aria-hidden="true"><svg width="100%" height="18"><pattern id={id} width="28" height="18" patternUnits="userSpaceOnUse"><path d="M0 16L14 2L28 16M7 16L14 9L21 16" fill="none" stroke="currentColor" strokeWidth="1.4"/><circle cx="14" cy="16" r="1.6" fill="currentColor"/></pattern><rect width="100%" height="18" fill={`url(#${id})`}/></svg></div>;
+  return (
+    <div className={`folk-border kantha ${className}`} aria-hidden="true">
+      <svg viewBox="0 0 3600 24" preserveAspectRatio="xMinYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <pattern id={id} width="56" height="24" patternUnits="userSpaceOnUse">
+          <path d="M28 6L34 12L28 18L22 12Z" fill="var(--mustard)" stroke="currentColor" strokeWidth="1"/>
+          <circle cx="0" cy="12" r="1.6" fill="currentColor"/><circle cx="56" cy="12" r="1.6" fill="currentColor"/>
+        </pattern>
+        <rect width="3600" height="24" fill={`url(#${id})`} opacity=".9"/>
+        <path d="M0 3H3600" className="kantha-run" strokeDasharray="10 8"/>
+        <path d={wave} className="kantha-wave" strokeDasharray="7 6"/>
+        <path d="M0 21H3600" className="kantha-run kantha-back" strokeDasharray="10 8"/>
+      </svg>
+    </div>
+  );
 }

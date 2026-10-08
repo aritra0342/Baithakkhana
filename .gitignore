@@ -10,3 +10,6 @@ outputs/
 skills-lock.json
 .vercel/
 *.tsbuildinfo
+
+# Local editor/agent tooling
+.claude/

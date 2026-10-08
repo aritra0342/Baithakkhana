@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { Layout, Art } from './components';
 import Home from './pages/Home';
 import MenuPage from './pages/MenuPage';
@@ -21,7 +21,7 @@ function CustomerApp() {
     <Route path="/order-success/:orderId" element={<Success/>}/>
     <Route path="/about" element={<About/>}/>
     <Route path="/image-credits" element={<ImageCredits/>}/>
-    <Route path="*" element={<div className="state-page"><Art kind="fish"/><h1>এই পাতাটি আড্ডায় নেই</h1><p>ঠিকানাটি হয়তো বদলে গেছে।</p><a className="button button-dark" href="/">ফিরে চলুন</a></div>}/>
+    <Route path="*" element={<div className="state-page"><Art kind="fish"/><h1>এই পাতাটি আড্ডায় নেই</h1><p>ঠিকানাটি হয়তো বদলে গেছে।</p><Link className="button button-dark" to="/">ফিরে চলুন</Link></div>}/>
   </Routes></Layout>;
 }
 

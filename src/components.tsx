@@ -5,6 +5,7 @@ import { categories } from './data/menu';
 import { money, useStore } from './store';
 import type { MenuItem } from './types';
 import { Brand } from './components/brand/Brand';
+import { Reveal } from './components/motion/Reveal';
 
 export { Brand } from './components/brand/Brand';
 export { FolkArt as Art, FolkBorder } from './components/art/FolkArt';
@@ -38,16 +39,16 @@ export function Header() {
   return <>
     <header>
       <Brand/>
-      <nav className="desktop-nav" aria-label="Main navigation"><NavLink to="/">Home</NavLink><NavLink to="/menu">Menu</NavLink><NavLink to="/about">Our Story</NavLink><Link to="/#specials">Our Specials</Link></nav>
-      <div className="header-actions"><Link to="/cart" className="cart-link"><ShoppingBag size={18}/><span>Cart</span>{count > 0 && <b aria-label={`${count} items`}>{count}</b>}</Link><span className="sr-only" aria-live="polite">{count} items in cart</span><Link to="/menu" className="button button-dark order-link">Order Now <ArrowRight size={16}/></Link><button ref={menuButton} className="icon-button menu-trigger" onClick={() => setOpen(!open)} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-controls="mobile-navigation" aria-expanded={open}>{open ? <X/> : <MenuIcon/>}</button></div>
+      <nav className="desktop-nav" aria-label="Main navigation"><NavLink to="/">Home</NavLink><NavLink to="/menu">Menu</NavLink><NavLink to="/about">Our story</NavLink><Link to="/#specials">Specials</Link></nav>
+      <div className="header-actions"><Link to="/cart" className="cart-link"><ShoppingBag size={18}/><span>Cart</span>{count > 0 && <b aria-label={`${count} items`}>{count}</b>}</Link><span className="sr-only" aria-live="polite">{count} items in cart</span><Link to="/menu" className="button button-dark order-link">Order now <ArrowRight size={16}/></Link><button ref={menuButton} className="icon-button menu-trigger" onClick={() => setOpen(!open)} aria-label={open ? 'Close navigation' : 'Open navigation'} aria-controls="mobile-navigation" aria-expanded={open}>{open ? <X/> : <MenuIcon/>}</button></div>
     </header>
-    {open && <nav ref={drawer} id="mobile-navigation" className="mobile-drawer" aria-label="Mobile navigation"><NavLink to="/">Home <ChevronRight/></NavLink><NavLink to="/menu">Menu <ChevronRight/></NavLink><NavLink to="/about">Our Story <ChevronRight/></NavLink><NavLink to="/cart">Your Cart <ChevronRight/></NavLink></nav>}
+    {open && <nav ref={drawer} id="mobile-navigation" className="mobile-drawer" aria-label="Mobile navigation"><NavLink to="/">Home <ChevronRight/></NavLink><NavLink to="/menu">Menu <ChevronRight/></NavLink><NavLink to="/about">Our story <ChevronRight/></NavLink><NavLink to="/cart">Your cart <ChevronRight/></NavLink></nav>}
   </>;
 }
 
 export function Footer() {
   const connected = import.meta.env.VITE_ORDER_MODE === 'server';
-  return <footer><div><Brand variant="footer"/><p>চা, গল্প আর চেনা স্বাদের<br/>একটা সুন্দর ঠিকানা।</p></div><div><small>EXPLORE</small><p><Link to="/menu">Menu</Link><br/><Link to="/about">Our Story</Link><br/><Link to="/image-credits">Photo credits</Link></p></div><div><small>{connected ? 'ORDERING NOTE' : 'DEMO CAFE'}</small><p>{connected ? <>Orders are sent to the staff dashboard.<br/>Online payment remains a demo.</> : <>Boithokkhana is a concept ordering experience.<br/>No real orders or payments are processed.</>}</p></div></footer>;
+  return <footer><div className="footer-grid"><div><Brand variant="footer"/><p>চা, গল্প আর চেনা স্বাদের<br/>একটা সুন্দর ঠিকানা।</p></div><div><small>Explore</small><p><Link to="/menu">Menu</Link><br/><Link to="/about">Our story</Link><br/><Link to="/image-credits">Photo credits</Link></p></div><div><small>{connected ? 'Ordering note' : 'Demo cafe'}</small><p>{connected ? <>Orders are sent to the staff dashboard.<br/>Online payment remains a demo.</> : <>Boithokkhana is a concept ordering experience.<br/>No real orders or payments are processed.</>}</p></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} বৈঠকখানা</span><span>আড্ডা চলুক — made in Kolkata</span></div></footer>;
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -70,12 +71,12 @@ export function ProductCard({ item, index = 0 }: { item: MenuItem; index?: numbe
   const line = useStore(s => s.items.find(line => line.itemId === item.id && Object.keys(line.customizations).length === 0));
   const nav = useNavigate();
   const hasOptions = !!item.customizations?.length;
-  return <article className={`product-card ${index % 3 === 1 ? 'offset' : ''}`}>
+  return <Reveal as="article" className="product-card" delay={Math.min(index % 3, 2) * 0.1}>
     <Link to={`/menu/item/${item.id}`} className="product-image"><img src={item.image} alt={item.en} loading="lazy" decoding="async"/>{item.bestseller && <span className="badge">Bestseller</span>}</Link>
     <div className="product-body"><div className="product-name"><div><h3>{item.bn}</h3><span>{item.en}</span></div><strong>{money(item.price)}</strong></div><p>{item.description}</p><div className="product-meta"><span>{item.time} min</span>{item.veg && <span><Leaf size={13}/> Veg</span>}</div>
       {hasOptions ? <button className="button button-outline" onClick={() => nav(`/menu/item/${item.id}`)}>Choose options <ChevronRight size={15}/></button> : line ? <Quantity value={line.quantity} onChange={quantity => update(line.key, quantity)}/> : <button className="button button-terracotta" onClick={() => add(item, {}, 1)}>Add to order <Plus size={15}/></button>}
     </div>
-  </article>;
+  </Reveal>;
 }
 
 export function Quantity({ value, onChange }: { value: number; onChange: (next: number) => void }) {

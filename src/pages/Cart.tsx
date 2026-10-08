@@ -17,7 +17,7 @@ export default function Cart() {
 
   if (!items.length) return <div className="state-page cart-empty"><Art kind="lotus"/><h1>Your cart is waiting<br/>for something delicious.</h1><p>এক কাপ চা দিয়ে শুরু হোক?</p><Link to="/menu" className="button button-terracotta">Explore Menu <ArrowRight size={16}/></Link></div>;
 
-  return <div className="cart-page"><SectionTitle as="h1" eyebrow="YOUR TABLE" title="আপনার অর্ডার" sub="ভালো জিনিস একটু সময় নিয়ে বেছে নেওয়া যায়।"/><div className="cart-layout"><div className="cart-lines"><div className="cart-mode"><h2>How will you enjoy it?</h2><OrderTypeSelector value={mode} onChange={setMode} compact/></div>
+  return <div className="cart-page"><SectionTitle as="h1" eyebrow="Your table" title="আপনার অর্ডার" sub="ভালো জিনিস একটু সময় নিয়ে বেছে নেওয়া যায়।"/><div className="cart-layout"><div className="cart-lines"><div className="cart-mode"><h2>How will you enjoy it?</h2><OrderTypeSelector value={mode} onChange={setMode} compact/></div>
     {items.map(line => {
       const item = getItem(line.itemId)!;
       return <article className="cart-line" key={line.key}><img src={item.image} alt=""/><div className="cart-line-copy"><h3>{item.bn}</h3><span>{item.en}</span>{Object.entries(line.customizations).map(([groupId, optionId]) => {
