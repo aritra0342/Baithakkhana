@@ -199,15 +199,25 @@ header {
 }
 .hero-photo img, .product-image img, .detail-image img, .about-photo img, .cart-line img { width: 100%; height: 100%; object-fit: cover; }
 .hero-photo img, .product-image img, .detail-image img, .cart-line img { filter: saturate(.92) sepia(.05) contrast(.98); }
-.hero-visual .hero-sun { position: absolute; z-index: var(--z-float); width: clamp(100px, 10vw, 148px); height: auto; left: 2%; top: 4%; animation: sun-breathe 9s ease-in-out infinite; }
-@keyframes sun-breathe { 0%, 100% { rotate: -4deg; translate: 0 0; } 50% { rotate: 4deg; translate: 0 -6px; } }
-.hero-visual .hero-fish { position: absolute; z-index: var(--z-float); width: clamp(120px, 12vw, 170px); height: auto; right: 0; bottom: 6%; rotate: -12deg; filter: drop-shadow(4px 5px 0 var(--deep)); animation: fish-swim 7s ease-in-out infinite; }
+/* Sun: rays spin, face breathes, glow pulses. The wrapper is moved by scroll (Home.tsx). */
+.hero-sun-wrap { position: absolute; z-index: var(--z-float); width: clamp(104px, 10.5vw, 156px); left: 1%; top: 3%; }
+.hero-sun { width: 100%; height: auto; overflow: visible; }
+.sun-rays, .sun-face, .sun-glow { transform-box: fill-box; transform-origin: center; }
+.sun-rays { animation: sun-spin 38s linear infinite; }
+.sun-face { animation: sun-breathe 5.5s ease-in-out infinite; }
+.sun-glow { opacity: .22; animation: sun-glow 5.5s ease-in-out infinite; }
+@keyframes sun-spin { to { transform: rotate(360deg); } }
+@keyframes sun-breathe { 0%, 100% { transform: scale(1) rotate(-3deg); } 50% { transform: scale(1.07) rotate(3deg); } }
+@keyframes sun-glow { 0%, 100% { opacity: .16; transform: scale(.92); } 50% { opacity: .38; transform: scale(1.08); } }
+.hero-fish-wrap { position: absolute; z-index: var(--z-float); width: clamp(120px, 12vw, 170px); right: 0; bottom: 6%; }
+.hero-fish { width: 100%; height: auto; rotate: -12deg; filter: drop-shadow(4px 5px 0 var(--deep)); animation: fish-swim 7s ease-in-out infinite; }
 @keyframes fish-swim { 0%, 100% { translate: 0 0; rotate: -12deg; } 50% { translate: -8px -5px; rotate: -9deg; } }
 .vertical-note { position: absolute; right: -4px; top: 50%; translate: 0 -50%; writing-mode: vertical-rl; font: 500 11px/1 var(--display-en); letter-spacing: 3px; color: var(--muted); z-index: var(--z-float); }
 
 /* আলপনা — self-drawing welcome mandala behind the hero photo */
 .alpana { position: absolute; z-index: var(--z-ornament); pointer-events: none; color: var(--terracotta); }
-.hero-alpana { width: min(150%, 660px); aspect-ratio: 1; left: 50%; top: 50%; translate: -50% -50%; }
+.hero-alpana-wrap { position: absolute; inset: 0; display: grid; place-items: center; z-index: var(--z-ornament); pointer-events: none; }
+.hero-alpana-wrap .alpana { position: relative; width: min(150%, 660px); aspect-ratio: 1; }
 .alpana-spin { width: 100%; height: 100%; display: block; animation: alpana-turn 140s linear infinite; }
 @keyframes alpana-turn { to { rotate: 360deg; } }
 .alpana path, .alpana circle {
@@ -271,9 +281,13 @@ header {
 .featured-inner { position: relative; z-index: var(--z-content); }
 .featured .section-title { margin: 0 auto 0 0; }
 .featured-border { position: absolute; left: 0; right: 0; top: 0; }
-.featured-kolka { position: absolute; z-index: var(--z-ornament); color: var(--terracotta); opacity: .32; width: clamp(140px, 16vw, 230px); height: auto; pointer-events: none; }
-.kolka-a { left: -2%; top: 14%; animation: kolka-drift 16s ease-in-out infinite; }
-.kolka-b { right: -1%; bottom: 8%; animation: kolka-drift 19s ease-in-out infinite reverse; }
+.featured-kolka { position: absolute; z-index: var(--z-ornament); color: var(--terracotta); opacity: .34; width: clamp(140px, 16vw, 230px); pointer-events: none; }
+.featured-kolka .kolka, .band-kolka { display: block; width: 100%; height: auto; }
+.kolka-a { left: -2%; top: 10%; }
+.kolka-b { right: -1%; bottom: 4%; }
+.featured-kolka .kolka { animation: kolka-sway 14s ease-in-out infinite; }
+.kolka-b .kolka { animation-delay: -7s; }
+@keyframes kolka-sway { 0%, 100% { rotate: -5deg; } 50% { rotate: 4deg; } }
 @keyframes kolka-drift { 0%, 100% { translate: 0 0; rotate: -4deg; } 50% { translate: 0 -18px; rotate: 3deg; } }
 
 .featured-grid, .menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
@@ -520,6 +534,42 @@ footer small { display: block; font: 600 10.5px/1 var(--display-en); letter-spac
 .footer-bottom { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; max-width: var(--container); margin: 48px auto 0; padding-top: 20px; border-top: 1px solid rgba(246, 235, 213, .16); color: var(--deep); font-size: 12px; }
 
 /* =========================================================================
+   17b. Tea cup motif, dividers and the scroll-progress cup
+   ========================================================================= */
+.tea-cup { display: block; color: var(--muted); overflow: visible; }
+.steam { opacity: 0; transform-box: fill-box; transform-origin: 50% 100%; animation: steam-rise 3.4s ease-in-out infinite; }
+.steam-2 { animation-delay: 1.1s; }
+.steam-3 { animation-delay: 2.2s; }
+@keyframes steam-rise {
+  0% { opacity: 0; transform: translateY(10px) scale(.7, .6); }
+  35% { opacity: .75; }
+  100% { opacity: 0; transform: translateY(-18px) scale(1.15, 1.2); }
+}
+.tea-surface { animation: tea-ripple 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes tea-ripple { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.94); } }
+
+.tea-divider { display: flex; align-items: center; gap: clamp(16px, 3vw, 28px); max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter) var(--section-y); }
+.tea-divider-line { flex: 1; height: 0; border-top: 2px dashed var(--line-strong); }
+.tea-divider-cup { display: grid; justify-items: center; gap: 8px; }
+.tea-divider-cup .tea-cup { width: clamp(56px, 6vw, 72px); }
+.tea-divider-cup small { font: 600 13px/1 var(--serif-bn); color: var(--terracotta); letter-spacing: .3px; white-space: nowrap; }
+.about .tea-divider { padding-bottom: 0; }
+.empty-cup { width: 120px; margin-bottom: 8px; }
+
+.scroll-cup {
+  position: fixed; right: clamp(14px, 2vw, 28px); bottom: clamp(14px, 2vw, 28px); z-index: 21;
+  width: 64px; padding: 0; border: 0; background: none;
+  display: grid; justify-items: center; gap: 2px; color: var(--muted);
+  filter: drop-shadow(0 10px 14px rgba(48, 37, 31, .28));
+  transition: filter .3s;
+}
+.scroll-cup .tea-cup { width: 100%; transition: transform .3s var(--ease-out); }
+.scroll-cup:hover .tea-cup { transform: translateY(-3px) rotate(-4deg); }
+.scroll-cup.is-full .tea-cup { color: var(--terracotta); }
+.scroll-cup-pct { font: 600 10px/1 var(--display-en); letter-spacing: 1px; color: var(--terracotta); font-variant-numeric: tabular-nums; }
+.scroll-cup:focus-visible { outline-offset: 6px; border-radius: 12px; }
+
+/* =========================================================================
    18. Admin (mode toggle, legacy)
    ========================================================================= */
 .checkout button:disabled { opacity: .6; cursor: wait; transform: none; }
@@ -532,7 +582,7 @@ footer small { display: block; font: 600 10.5px/1 var(--display-en); letter-spac
   .hero h1 { letter-spacing: -1.5px; }
   .hero-visual { min-height: 480px; }
   .hero-photo { width: min(100%, 340px); }
-  .hero-alpana { width: min(160%, 560px); }
+  .hero-alpana-wrap .alpana { width: min(160%, 560px); }
   .featured-grid, .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
   .story-strip { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); }
   .cart-layout, .checkout-grid { grid-template-columns: minmax(0, 1.3fr) minmax(280px, 1fr); }
@@ -573,9 +623,11 @@ footer small { display: block; font: 600 10.5px/1 var(--display-en); letter-spac
   .values { margin-top: 36px; }
   .hero-visual { min-height: 0; margin-top: 52px; padding: 36px 0 24px; }
   .hero-photo { width: min(78vw, 360px); }
-  .hero-alpana { width: min(118vw, 520px); }
-  .hero-visual .hero-sun { width: 92px; left: 0; top: 0; }
-  .hero-visual .hero-fish { width: 118px; right: 0; bottom: 0; }
+  .hero-alpana-wrap .alpana { width: min(118vw, 520px); }
+  .hero-sun-wrap { width: 96px; left: 0; top: 0; }
+  .hero-fish-wrap { width: 118px; right: 0; bottom: 0; }
+  .scroll-cup { width: 52px; }
+  body:has(.add-row) .scroll-cup { bottom: 92px; }
   .vertical-note { display: none; }
 
   .adda-marquee { padding: 14px 0; }
@@ -650,7 +702,7 @@ footer small { display: block; font: 600 10.5px/1 var(--display-en); letter-spac
   .cart-link span { display: none; }
   .hero h1 { font-size: 42px; }
   .hero-photo { width: 76vw; }
-  .hero-visual .hero-fish { width: 95px; }
+  .hero-fish-wrap { width: 95px; }
   .values { display: grid; gap: 10px; }
   .mode strong { font-size: 11.5px; }
   .mode span { font-size: 10px; }
@@ -665,5 +717,6 @@ footer small { display: block; font: 600 10.5px/1 var(--display-en); letter-spac
   .product-card:hover, .product-card:hover .product-image img, .button:hover, .mode:hover, .category-list a:hover { transform: none; }
   .adda-track { animation: none; }
   .alpana path, .alpana circle { stroke-dashoffset: 0; fill-opacity: .9; }
-  .hero-visual .hero-sun, .hero-visual .hero-fish, .featured-kolka, .band-kolka, .menu-intro .menu-ornament, .kantha-run, .kantha-wave, .alpana-spin { animation: none !important; }
+  .sun-rays, .sun-face, .sun-glow, .hero-fish, .featured-kolka .kolka, .band-kolka, .menu-intro .menu-ornament, .kantha-run, .kantha-wave, .alpana-spin, .steam, .adda-track { animation: none !important; }
+  .steam { opacity: .5; }
 }

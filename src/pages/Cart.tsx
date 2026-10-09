@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Trash2 } from 'lucide-react';
 import { getItem } from '../data/menu';
 import { money, totalsFor, useStore } from '../store';
-import { Art, Quantity, SectionTitle } from '../components';
+import { Quantity, SectionTitle } from '../components';
 import { OrderTypeSelector } from '../components/checkout/OrderTypeSelector';
+import { TeaCup } from '../components/art/TeaCup';
 import type { Totals } from '../types';
 
 export default function Cart() {
@@ -15,7 +16,7 @@ export default function Cart() {
   const clear = useStore(state => state.clear);
   const totals = totalsFor(items, mode);
 
-  if (!items.length) return <div className="state-page cart-empty"><Art kind="lotus"/><h1>Your cart is waiting<br/>for something delicious.</h1><p>এক কাপ চা দিয়ে শুরু হোক?</p><Link to="/menu" className="button button-terracotta">Explore Menu <ArrowRight size={16}/></Link></div>;
+  if (!items.length) return <div className="state-page cart-empty"><TeaCup className="empty-cup" fill={0.15}/><h1>Your cart is waiting<br/>for something delicious.</h1><p>এক কাপ চা দিয়ে শুরু হোক?</p><Link to="/menu" className="button button-terracotta">Explore Menu <ArrowRight size={16}/></Link></div>;
 
   return <div className="cart-page"><SectionTitle as="h1" eyebrow="Your table" title="আপনার অর্ডার" sub="ভালো জিনিস একটু সময় নিয়ে বেছে নেওয়া যায়।"/><div className="cart-layout"><div className="cart-lines"><div className="cart-mode"><h2>How will you enjoy it?</h2><OrderTypeSelector value={mode} onChange={setMode} compact/></div>
     {items.map(line => {

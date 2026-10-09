@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Clock } from 'lucide-react';
-import { Art, Divider, FolkBorder } from '../components';
+import { Art, FolkBorder } from '../components';
+import { TeaDivider } from '../components/art/TeaDivider';
 import { FolkPanel } from '../components/art/FolkPanel';
 import { Alpana } from '../components/art/Alpana';
 import { Kolka } from '../components/art/Kolka';
@@ -17,7 +18,7 @@ export default function About() {
         <figure className="about-photo"><img src={coffeeHouse} alt="Interior of Kolkata's historic College Street Coffee House"/><figcaption>Inspired by Kolkata's long tradition of coffee-house adda.</figcaption><Art kind="fish"/></figure>
       </Rise>
     </section>
-    <Divider/>
+    <TeaDivider note="এক কাপ চা হোক"/>
     <section className="about-grid">
       <Reveal><span className="eyebrow">What it means</span><h2>বৈঠকখানা মানে<br/>বসার <em>একটা অজুহাত।</em></h2></Reveal>
       <Reveal delay={0.12}><p>শহরের ব্যস্ততার মধ্যে আমরা একটা ছোট্ট জায়গা বানিয়েছি — যেখানে পরিচিত মুখের পাশে অচেনা মানুষও বসে পড়ে। কড়া চায়ের গন্ধে কথা একটু সহজ হয়ে আসে।</p><p>আমাদের রান্নাঘর বেছে নেয় বাজারের ভালো জিনিস, ধীর রান্না আর বাড়ির রেসিপি। প্লেটে তাই কোনো অভিনয় নেই — শুধু মন দিয়ে বানানো খাবার।</p></Reveal>

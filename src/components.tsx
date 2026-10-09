@@ -6,6 +6,7 @@ import { money, useStore } from './store';
 import type { MenuItem } from './types';
 import { Brand } from './components/brand/Brand';
 import { Reveal } from './components/motion/Reveal';
+import { ScrollCup } from './components/motion/ScrollCup';
 
 export { Brand } from './components/brand/Brand';
 export { FolkArt as Art, FolkBorder } from './components/art/FolkArt';
@@ -57,7 +58,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
     else window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname, location.hash]);
-  return <><a href="#main-content" className="skip-link">Skip to content</a><Header/><main id="main-content">{children}</main><Footer/></>;
+  return <><a href="#main-content" className="skip-link">Skip to content</a><Header/><main id="main-content">{children}</main><Footer/><ScrollCup/></>;
 }
 
 export function SectionTitle({ eyebrow, title, sub, as = 'h2' }: { eyebrow: string; title: string; sub?: string; as?: 'h1' | 'h2' }) {

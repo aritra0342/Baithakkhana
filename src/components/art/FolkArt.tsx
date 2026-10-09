@@ -27,13 +27,19 @@ export function FolkArt({ kind = 'lotus', className = '' }: { kind?: Motif; clas
   );
 
   if (kind === 'sun') return (
-    <motion.svg {...motionProps} className={`folk-art folk-sun ${className}`} viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="80" cy="80" r="49" fill="var(--mustard)" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="80" cy="80" r="38" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 5"/>
-      {Array.from({ length: 16 }, (_, index) => <path key={index} d="M80 8V23" stroke="currentColor" strokeWidth="2" transform={`rotate(${index * 22.5} 80 80)`}/>)}
-      <path d="M55 85Q80 59 105 85M58 93Q80 110 102 93" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      <circle cx="65" cy="75" r="2" fill="currentColor"/><circle cx="95" cy="75" r="2" fill="currentColor"/>
-    </motion.svg>
+    <svg className={`folk-art folk-sun ${className}`} viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle className="sun-glow" cx="80" cy="80" r="70" fill="var(--mustard)"/>
+      <g className="sun-rays">
+        {Array.from({ length: 16 }, (_, index) => <path key={index} d={index % 2 ? 'M80 10V22' : 'M80 4V22'} stroke="currentColor" strokeWidth={index % 2 ? 1.6 : 2.4} strokeLinecap="round" transform={`rotate(${index * 22.5} 80 80)`}/>)}
+        <circle cx="80" cy="80" r="62" stroke="currentColor" strokeWidth="1" strokeDasharray="1 6"/>
+      </g>
+      <g className="sun-face">
+        <circle cx="80" cy="80" r="49" fill="var(--mustard)" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="80" cy="80" r="38" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 5"/>
+        <path d="M55 85Q80 59 105 85M58 93Q80 110 102 93" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <circle cx="65" cy="75" r="2" fill="currentColor"/><circle cx="95" cy="75" r="2" fill="currentColor"/>
+      </g>
+    </svg>
   );
 
   if (kind === 'vine') return (
